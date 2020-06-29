@@ -1,0 +1,188 @@
+public class TestDataUtil {
+    
+    public static Pricebook2 getTestPriceBook(String pbName){
+        Pricebook2 pb = new Pricebook2(
+                Name = pbName,
+                IsActive = true
+                
+        );
+
+        return pb;
+    }
+
+    public static Product2 getTestProduct(Pricebook2 pb) {
+
+        Product2 p = new Product2(
+                Name = 'Available Product ' + Math.random(),
+                IsActive = true 
+        );
+        
+        return p;
+
+    }
+    
+    public static PricebookEntry getTestStandardPBE(Product2 p){
+        
+         PricebookEntry stdPBE = new PricebookEntry(
+                IsActive = true,
+                //CurrencyIsoCode = 'USD',
+                Pricebook2Id = Test.getStandardPricebookId(),
+                Product2Id = p.Id,
+                UnitPrice = 5.00
+        );
+        
+        return stdPBE;
+    }
+
+    public static PricebookEntry getTestCustomPBE(Product2 p, Pricebook2 pb) {
+
+        PricebookEntry pbe = new PricebookEntry(
+                IsActive = true,
+                //CurrencyIsoCode = 'USD',
+                Pricebook2Id = pb.Id,
+                Product2Id = p.Id,
+                UnitPrice = 5.00
+        );
+        
+        return pbe;
+    }
+    
+    public static Account getTestAccount(){
+        
+        Account objAccount = new Account(
+                Name = Math.random() + 'Acct',
+                BillingCity = 'Test',
+                BillingStreet = 'Test Street',
+                BillingCountry = 'US',
+                BillingState = 'Test State',
+                BillingPostalCode = '99988'
+        );
+        
+        return objAccount;
+    } 
+    
+    public static Account getTestAccount(String strRecordTypeName){
+        
+        
+        Id objRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get(strRecordTypeName).getRecordTypeId();
+        
+        Account objAccount = new Account(
+                Name = Math.random() + 'Acct',
+                BillingCity = 'Test',
+                BillingStreet = 'Test Street',
+                BillingCountry = 'US',
+                BillingState = 'Test State',
+                BillingPostalCode = '99988',
+                RecordTypeId = objRecordTypeId
+        );
+        
+        return objAccount;
+    } 
+    
+    public static Contact getTestContact(Id objAccId){
+        
+        Contact objContact = new Contact(
+                FirstName = String.valueOf(Math.random()),
+                LastName = String.valueOf(Math.random() * 0.5),
+                AccountId = objAccId,
+                Email =  String.valueOf(Math.random()) + '@testemail.com'
+        );
+        
+        return objContact;
+    } 
+    /*
+    public static Contact getTestContact(String strRecordTypeName){
+        
+        
+        Id objRecordTypeId = Schema.SObjectType.Contact.getRecordTypeInfosByName().get(strRecordTypeName).getRecordTypeId();
+        
+        Contact objContact = new Contact(
+                FirstName = String.valueOf(Math.random()),
+                LastName = String.valueOf(Math.random() * 0.5),
+                AccountId = objAccId,
+                Email =  String.valueOf(Math.random()) + '@testemail.com',
+            	RecordTypeId = objRecordTypeId
+        );
+        
+        return objContact;
+        
+    } */
+    
+    public static Opportunity getTestOpportunity(Id objAccId){
+        
+        Opportunity opp = new Opportunity(
+                Name = 'Test Opp - ' + Math.random(),
+                StageName = 'Qualification',
+                Type = 'Ad Sales',
+                AccountId = objAccId,
+                CloseDate = System.today() + 8,
+                Amount = 500
+        );
+        
+        return opp;
+    }
+    
+    public static Opportunity getTestOpportunity(Id objAccId, Id objPBId){
+        
+        Opportunity opp = new Opportunity(
+                Name = 'Test Opp - ' + Math.random(),
+                StageName = 'Qualification',
+                Type = 'Ad Sales',
+                AccountId = objAccId,
+                CloseDate = System.today() + 8,
+                Amount = 500,
+                Pricebook2Id = objPBId
+        );
+        
+        return opp;
+    }
+    
+    public static Opportunity getTestOpportunity(Id objAccId, Id objPBId, String strRecordTypeName){
+        
+        Id objRecordTypeId = Schema.SObjectType.Opportunity.getRecordTypeInfosByName().get(strRecordTypeName).getRecordTypeId();
+        
+        Opportunity opp = new Opportunity(
+                Name = 'Test Opp - ' + Math.random(),
+                StageName = 'Qualification',
+                Type = 'Ad Sales',
+                AccountId = objAccId,
+                CloseDate = System.today() + 8,
+                Amount = 500,
+                Pricebook2Id = objPBId,
+                RecordTypeId = objRecordTypeId
+        );
+        
+        return opp;
+    }
+    
+    public static Opportunity getTestOpportunity(Id objAccId,  String strRecordTypeName){
+        
+        Id objRecordTypeId = Schema.SObjectType.Opportunity.getRecordTypeInfosByName().get(strRecordTypeName).getRecordTypeId();
+        
+        Opportunity opp = new Opportunity(
+                Name = 'Test Opp - ' + Math.random(),
+                StageName = 'Qualification',
+                Type = 'Ad Sales',
+                AccountId = objAccId,
+                CloseDate = System.today() + 8,
+                Amount = 500,
+                RecordTypeId = objRecordTypeId
+        );
+        
+        return opp;
+    }
+
+    public static OpportunityLineItem getTestOpportunityProduct(Id objOppId, PricebookEntry objPBE){
+        
+        OpportunityLineItem objLineItem = new OpportunityLineItem(
+        	OpportunityId = objOppId,
+             PricebookEntryId = objPBE.Id,
+            UnitPrice = 7000,
+			Quantity = 5
+        );
+        
+        return objLineItem;
+    }
+
+    
+}
